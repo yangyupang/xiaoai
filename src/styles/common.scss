@@ -1,11 +1,19 @@
 .el__header {
+    // width: 100vm;
+    // height: 100vh;
     .el-header {
         // padding: 0 !important;
         background-color: #2e5e85;
+        // position: fixed;
+        // width: 100%;
+        // height: 10%;
     }
     .el-aside {
-        height: 1000px;
+        height: 2000px;
         background-color: rgb(84, 92, 100);
+        // position: fixed;
+        // top: 10%;
+        // height: 90%;
     }
     .el-main {
         // height: 100%;

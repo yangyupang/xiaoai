@@ -4,7 +4,7 @@
       <el-header>
         <div class="head">
           <div class="head-left">欢迎{{ user.username }}来到沫白后台系统</div>
-          <div class="head-right">***，亲爱的 **** 登录时间：*****</div>
+          <div class="head-right">{{hour | greetings}},亲爱的{{ user.username }}&nbsp;您的登录时间是：{{time}}</div>
         </div>
       </el-header>
       <el-container>
@@ -16,7 +16,12 @@
             text-color="#fff"
             active-text-color="#ffd04b"
           >
-            <el-menu-item @click="go(item.path)" :index="item.path" v-for="(item,index) in asidelist" :key="index">
+            <el-menu-item
+              @click="go(item.path)"
+              :index="item.path"
+              v-for="(item,index) in asidelist"
+              :key="index"
+            >
               <i :class="item.icon"></i>
               <span slot="title">{{item.title}}</span>
             </el-menu-item>
@@ -63,40 +68,62 @@ export default {
         {
           title: "发布文章",
           icon: "el-icon-message",
-          path:'/markdown'
+          path: "/markdown"
         },
         {
           title: "统计",
           icon: "el-icon-help",
-          path:"/statistics"
+          path: "/statistics"
         },
         {
           title: "导出Excel",
           icon: "el-icon-download",
-          path:'/excel'
+          path: "/excel"
         },
         {
           title: "退出系统",
           icon: "el-icon-delete",
-          path:'/logout'
+          path: "/logout"
         }
       ],
-      user:{}
+      user: "",
+      time: "",
+      hour: ""
     };
   },
   components: {},
   methods: {
-    go(data){
+    go(data) {
       this.$router.push(data);
     }
   },
   mounted() {
-    this.user = localStorage.getItem('adminUser')
-    console.log(this.user.username );
+    // this.nowtime = new Date();
+    this.user = JSON.parse(localStorage.getItem("adminUser"));
+    this.time = this.$dayjs(this.user.date).format("YYYY年MM月DD日HH时mm分ss秒");
+    this.hour = this.$dayjs().format("HH");
+    // console.log(this.user.username );
+    // console.log(this.user);
+    // console.log(this.time);
+    // console.log(this.hour);
   },
   watch: {},
   computed: {},
-  filters: {}
+  filters: {
+    greetings(data) {
+      if (data >= 6 && data < 12) {
+        return "早上好";
+      } else if (data >= 12 && data < 14) {
+        return "中午好";
+      } else if (data >= 14 && data < 18) {
+        return "下午好";
+      } else if (data >= 18 && data < 24) {
+        return "晚上好";
+      }else{
+        return "该睡觉咯";
+      }
+    }
+  }
 };
 </script>
 

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
-import com from './common'
+// import com from './common'
 import lodash from 'lodash'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -21,7 +21,6 @@ import dayjs from 'dayjs'
 
 Vue.prototype.$axios = service
 Vue.prototype.$dayjs = dayjs
-Vue.prototype.$com = com
 Vue.prototype.$lodash = lodash
 
 
