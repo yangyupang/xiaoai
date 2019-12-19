@@ -23,9 +23,9 @@ service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencod
 
 // 请求拦截?
 service.interceptors.request.use(config => {
-    loading = Loading.service({
-        text: '正在加载.....'
-    })
+    // loading = Loading.service({
+    //     text: '正在加载.....'
+    // })
     let token = localStorage.getItem('adminToken')
         // 每次请求 都在请求头带上token
     if (token) {
