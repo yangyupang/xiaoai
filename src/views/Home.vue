@@ -10,7 +10,7 @@
           <div class="desc">
             <div class="title">New Visits</div>
             <div class="num">
-              <countTo :startVal="startVal" :endVal="list.visits" :duration="3000"></countTo>
+              <countTo :startVal="startVal" :endVal="datalist.visits" :duration="3000"></countTo>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div class="desc">
             <div class="title">Messages</div>
             <div class="num">
-              <countTo :startVal="startVal" :endVal="list.messages" :duration="3000"></countTo>
+              <countTo :startVal="startVal" :endVal="datalist.messages" :duration="3000"></countTo>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <div class="desc">
             <div class="title">Purchases</div>
             <div class="num">
-              <countTo :startVal="startVal" :endVal="list.purchases" :duration="3000"></countTo>
+              <countTo :startVal="startVal" :endVal="datalist.purchases" :duration="3000"></countTo>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
           <div class="desc">
             <div class="title">Shopping</div>
             <div class="num">
-              <countTo :startVal="startVal" :endVal="list.shopping" :duration="3000"></countTo>
+              <countTo :startVal="startVal" :endVal="datalist.shopping" :duration="3000"></countTo>
             </div>
           </div>
         </div>
@@ -78,6 +78,7 @@
     </div>
 
     <div class="foot">
+      <!-- 订单表 -->
       <el-card class="table">
         <el-table :data="orderData" style="width: 100%">
           <el-table-column prop="num" label="Order_No" width="300" align="center"></el-table-column>
@@ -121,6 +122,18 @@
           </div>
         </div>
       </el-card>
+      <!-- 进度条 -->
+      <el-card>
+        <img src="../assets/image/s1.png" alt style="width: 100%" />
+        <div class="progress-bar">
+          <div v-for="(item,index) in progressList" :key="index" class="progress">
+            <div>{{item.name}}</div>
+            <el-progress v-if='item.progress === 1' :percentage="(item.progress)*100" status="success"></el-progress>
+            <el-progress v-else-if="item.progress === 0" :percentage="(item.progress)*100" status="exception"></el-progress>
+            <el-progress v-else :percentage="(item.progress)*100"></el-progress>
+          </div>
+        </div>
+      </el-card>
     </div>
   </div>
 </template>
@@ -130,7 +143,7 @@ import countTo from "vue-count-to";
 export default {
   data() {
     return {
-      list: [],
+      datalist: [],
       startVal: 0,
       colors: ["#3C88F7", "#FD1A5E"],
       charts: {
@@ -158,7 +171,8 @@ export default {
       orderData: [],
       list: [],
       num: 0,
-      checkall: false
+      checkall: false,
+      progressList: []
     };
   },
   components: {
@@ -192,8 +206,8 @@ export default {
     getData() {
       this.$axios.req("/homeData").then(res => {
         if (res.code === 0) {
-          this.list = res.data;
-          // console.log(this.list);
+          this.datalist = res.data;
+          // console.log(this.datalist);
         }
       });
     },
@@ -225,6 +239,7 @@ export default {
         }
       });
     },
+    // - 订单: /orderData (get请求)
     getOrderData() {
       this.$axios.req("/orderData").then(res => {
         if (res.code === 0) {
@@ -236,11 +251,21 @@ export default {
         }
       });
     },
+    // - todolist: /todoList (get请求)
     getToDoList() {
       this.$axios.req("/todoList").then(res => {
         if (res.code === 0) {
           this.list = res.data;
           // console.log(this.list );
+        }
+      });
+    },
+    // - 进度条: /progress (get请求)
+    getProgressList() {
+      this.$axios.req("/progress").then(res => {
+        if (res.code === 0) {
+          this.progressList = res.data;
+          // console.log(this.progressList);
         }
       });
     }
@@ -253,11 +278,11 @@ export default {
     this.getOrderData();
     this.getToDoList();
     this.show(0);
+    this.getProgressList();
   },
   watch: {},
   computed: {
     sum() {
-      // console.log(this.list);
       return this.list.filter(item => !item.checked).length;
     }
   },
@@ -341,6 +366,12 @@ export default {
         flex: 2;
       }
     }
+    .progress-bar{
+      margin-top:30px; 
+      .progress{
+        margin: 10px 0;
+      }
+    }
   }
 }
 
@@ -356,7 +387,7 @@ export default {
 
 .todo-wrap {
   .top {
-    height: 50px;
+    // height: 50px;
     border-bottom: 1px solid #ddd;
     display: flex;
     position: relative;
@@ -365,8 +396,6 @@ export default {
       width: 30px;
       height: 30px;
       background-image: url("../assets/downarrow.png");
-      position: relative;
-      top: 10px;
     }
 
     .top-right {
@@ -374,7 +403,7 @@ export default {
       right: 0;
       height: 50px;
       line-height: 50px;
-      font-size: 25px;
+      font-size: 18px;
       color: #1d1b1d;
     }
   }
@@ -394,7 +423,7 @@ export default {
       }
 
       .dv1 {
-        width: 32px;
+        width: 52px;
         height: 32px;
         border-radius: 50%;
         border: 1px solid #5f585f;
@@ -423,6 +452,7 @@ export default {
     border-top: 1px solid #ddd;
     height: 50px;
     display: flex;
+    font-size: 13px;
     div {
       width: 85px;
       height: 40px;

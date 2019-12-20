@@ -117,6 +117,7 @@ export default {
     register(data) {
       this.$router.push(data);
     },
+    // 刷新验证码
     getCaptcha() {
       this.$refs.captcha.src = "api/captcha?time=" + Date.now();
     }
