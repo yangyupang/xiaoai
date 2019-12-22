@@ -66,12 +66,15 @@
     </div>
 
     <div class="chat">
+      <!-- 雷达图 -->
       <el-card>
         <ve-radar :data="radarChat"></ve-radar>
       </el-card>
+      <!-- 饼状图 -->
       <el-card>
         <ve-ring :data="ringChat" :settings="chartSettings"></ve-ring>
       </el-card>
+      <!-- 柱状图 -->
       <el-card>
         <ve-histogram :data="charts"></ve-histogram>
       </el-card>
@@ -128,8 +131,16 @@
         <div class="progress-bar">
           <div v-for="(item,index) in progressList" :key="index" class="progress">
             <div>{{item.name}}</div>
-            <el-progress v-if='item.progress === 1' :percentage="(item.progress)*100" status="success"></el-progress>
-            <el-progress v-else-if="item.progress === 0" :percentage="(item.progress)*100" status="exception"></el-progress>
+            <el-progress
+              v-if="item.progress === 1"
+              :percentage="(item.progress)*100"
+              status="success"
+            ></el-progress>
+            <el-progress
+              v-else-if="item.progress === 0"
+              :percentage="(item.progress)*100"
+              status="exception"
+            ></el-progress>
             <el-progress v-else :percentage="(item.progress)*100"></el-progress>
           </div>
         </div>
@@ -146,10 +157,12 @@ export default {
       datalist: [],
       startVal: 0,
       colors: ["#3C88F7", "#FD1A5E"],
+    // 折线图，柱状图数据
       charts: {
         columns: ["date", "expected", "actual"],
         rows: []
       },
+      // 雷达图数据
       radarChat: {
         columns: [
           "name",
@@ -161,10 +174,12 @@ export default {
         ],
         rows: []
       },
+      //饼状图数据
       ringChat: {
         columns: ["name", "data"],
         rows: []
       },
+
       chartSettings: {
         roseType: "radius"
       },
@@ -366,9 +381,9 @@ export default {
         flex: 2;
       }
     }
-    .progress-bar{
-      margin-top:30px; 
-      .progress{
+    .progress-bar {
+      margin-top: 30px;
+      .progress {
         margin: 10px 0;
       }
     }

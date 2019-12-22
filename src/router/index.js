@@ -195,12 +195,14 @@ const router = new VueRouter({
     routes
 })
 
+
 router.beforeEach((to, from, next) => {
-    let user = localStorage.getItem('user')
-
+    let user = localStorage.getItem('adminUser')
     document.title = to.meta.title
-    next()
-        // user ? next() :next('/login')
+    if (to.path === '/login' || to.path === '/register') {
+        next()
+    } else {
+        user ? next() : next('/login')
+    }
 })
-
 export default router

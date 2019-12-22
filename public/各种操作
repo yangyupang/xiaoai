@@ -82,3 +82,14 @@ data() {
       // console.log(time2)
       // console.log(time3)
       // this.getData()
+//模糊搜索
+  watch: {
+    searchValue(val) {
+      this.$axios.req("/tableData").then(res => {
+          this.tableDataList = res.data.filter(item => {
+            return JSON.stringify(item).includes(val);
+          });
+        
+      });
+    }
+  },   
