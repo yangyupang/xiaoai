@@ -101,17 +101,18 @@ export default {
       // console.log(`当前页: ${val}`);
       this.currentPage = Number(val);
     },
-    getTableData() {
-      this.$axios.req("/tableData").then(res => {
-        if (res.code === 0) {
-          this.tableDataList = res.data;
-          // console.log(this.tableDataList);
-        }
-      });
-    }
+    // getTableData() {
+    //   this.$axios.req("/tableData").then(res => {
+    //     if (res.code === 0) {
+    //       this.tableDataList = res.data;
+    //       // console.log(this.tableDataList);
+    //     }
+    //   });
+    // }
   },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
+    this.tableDataList = JSON.parse(sessionStorage.getItem("tableDataList"));
   },
   watch: {},
   computed: {},
