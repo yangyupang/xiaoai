@@ -1,4 +1,5 @@
 <template>
+<!-- 公共主页 -->
   <div class="el__header">
     <el-container>
       <el-header>

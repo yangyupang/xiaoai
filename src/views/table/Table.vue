@@ -1,4 +1,5 @@
 <template>
+<!-- 分页表格页 -->
   <div>
     <!-- 搜索 -->
     <div style="margin: 20px 0;">
@@ -8,6 +9,7 @@
       :data="tableDataList.slice((currentPage-1)*pageSize,pageSize*currentPage)"
       style="width: 100%"
     >
+    <!-- 数据展示的表头 名称 编号 原价 现价 -->
       <el-table-column prop="NAME" label="名称"></el-table-column>
       <el-table-column prop="GOODS_SERIAL_NUMBER" label="商品编号"></el-table-column>
       <el-table-column prop="ORI_PRICE" label="原价"></el-table-column>
@@ -30,6 +32,7 @@
       width="30%"
       :visible.sync="dialogVisible"
     >
+    <!-- 修改操作的弹出框 -->
       <div>
         <div class="item">
           <div class="name">名称:</div>
@@ -44,6 +47,7 @@
           <el-input v-model="currentGood.PRESENT_PRICE"></el-input>
         </div>
       </div>
+      <!-- 点击取消或确定修改 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sureEdit">确 定</el-button>
@@ -90,12 +94,15 @@ export default {
       // console.log(`当前页: ${val}`);
       this.currentPage = Number(val);
     },
+    //点击展示修改窗口
     alterGoods(row) {
       // console.log(row);
+      // 将点击项的数据赋值给currentGood
       this.currentGood = row;
       this.dialogVisible = true;
     },
     sureEdit() {
+      // 确认修改并隐藏修改窗口
       this.dialogVisible = false;
       this.$message({
         type: "success",
@@ -110,6 +117,7 @@ export default {
         message: "删除成功"
       });
     },
+    // 获取展示数据
     getTableData() {
       this.$axios.req("/tableData").then(res => {
         if (res.code === 0) {
@@ -123,6 +131,7 @@ export default {
     this.getTableData();
   },
   watch: {
+    //模糊搜索
     searchValue(val) {
       this.$axios.req("/tableData").then(res => {
         this.tableDataList = res.data.filter(item => {

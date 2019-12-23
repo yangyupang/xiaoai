@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card>
+      <!-- element组件上传图片 -->
       <h1 style="font-size: 24px">支持拖拽</h1>
       <div class="top">Element UI自带上传组件</div>
       <el-upload class="upload-demo" drag action="/api/upload" multiple>
@@ -11,7 +12,7 @@
         </div>
         <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
       </el-upload>
-
+      <!-- vue-image-crop-upload图片上传 -->
       <h1 class="caijian">支持裁剪</h1>
       <div class="top">vue-image-crop-upload</div>
       <div style="margin-top: 30px">

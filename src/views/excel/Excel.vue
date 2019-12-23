@@ -1,4 +1,5 @@
 <template>
+<!-- excel导出页 -->
   <div>
     <el-table
       :data="tableDataList.slice((currentPage-1)*pageSize,pageSize*currentPage)"
@@ -35,6 +36,7 @@
           class="export-excel-wrapper"
           :data="tableDataList.slice((currentPage-1)*pageSize,pageSize*currentPage)"
           name="filename.xls"
+          :fields="json_fields"
         >
           <div>
             <el-button type="primary">导出xls</el-button>
@@ -46,7 +48,8 @@
           type="csv"
           class="export-excel-wrapper"
           :data="tableDataList.slice((currentPage-1)*pageSize,pageSize*currentPage)"
-          name="filename.xls"
+          name="filename.csv"
+          :fields="json_fields"
         >
           <div>
             <el-button type="danger" class="btn1">导出csv</el-button>
@@ -58,11 +61,26 @@
 </template>
 
 <script>
-import downloadExcel from 'vue-json-excel'
+import downloadExcel from "vue-json-excel";
 
 export default {
   data() {
     return {
+      // 自主选择要导出的字段，若不指定，默认导出全部数据中心全部字段
+       json_fields: {
+        名称: "NAME",
+        商品编号: "GOODS_SERIAL_NUMBER",
+        原价: "ORI_PRICE",
+        现价: "PRESENT_PRICE"
+      },
+      json_meta: [
+        [
+          {
+            " key ": " charset ",
+            " value ": " utf-8 "
+          }
+        ]
+      ],
       tableDataList: [],
       //分页时显示的第几页
       currentPage: 1,

@@ -4,7 +4,7 @@
     <div class="goodbye">
       <img src="../../assets/image/goodbye.gif" alt />
     </div>
-    <el-button class="out" type="primary" @click="out">退出登陆</el-button>
+    <el-button class="out" type="danger" @click="out" round>退出登陆</el-button>
 
 
   </div>

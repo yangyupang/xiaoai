@@ -1,4 +1,5 @@
 <template>
+<!-- 文章详情页 -->
   <div>
       <el-button @click="backToalready" type="primary">返回</el-button>
       <h3 class="hs textcenter">{{articlec.title}}</h3>

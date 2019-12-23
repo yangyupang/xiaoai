@@ -1,4 +1,5 @@
 <template>
+<!-- 发布文章页 -->
   <div>
     <div v-if="this.num === 1">
       <div class="markheader">
@@ -161,6 +162,7 @@ export default {
         ]
       },
       pickerOptions: {
+        //所选择时间不能超过当前时间
         disabledDate(time) {
           // console.log(_this.$dayjs(time).format('HH-mm-ss'));
           return time.getTime() > Date.now();
@@ -204,6 +206,7 @@ export default {
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
+        // 所有内容都满足后 将数据存入数据库
         if (valid) {
           this.$axios
             .req("/article/create", {
