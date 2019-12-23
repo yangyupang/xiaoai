@@ -1,5 +1,5 @@
 <template>
-<!-- 公共主页 -->
+  <!-- 公共主页 -->
   <div class="el__header">
     <el-container>
       <el-header>
@@ -29,7 +29,9 @@
           </el-menu>
         </el-aside>
         <el-main>
-          <router-view />
+          <keep-alive include="Markdown">
+            <router-view />
+          </keep-alive>
         </el-main>
       </el-container>
     </el-container>
@@ -101,7 +103,9 @@ export default {
   mounted() {
     // this.nowtime = new Date();
     this.user = JSON.parse(localStorage.getItem("adminUser"));
-    this.time = this.$dayjs(this.user.date).format("YYYY年MM月DD日HH时mm分ss秒");
+    this.time = this.$dayjs(this.user.date).format(
+      "YYYY年MM月DD日HH时mm分ss秒"
+    );
     this.hour = this.$dayjs().format("HH");
     // console.log(this.user.username );
     // console.log(this.user);
@@ -120,7 +124,7 @@ export default {
         return "下午好";
       } else if (data >= 18 && data < 24) {
         return "晚上好";
-      }else{
+      } else {
         return "该睡觉咯";
       }
     }

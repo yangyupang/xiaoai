@@ -1,5 +1,5 @@
 <template>
-<!-- 发布文章页 -->
+  <!-- 发布文章页 -->
   <div>
     <div v-if="this.num === 1">
       <div class="markheader">
@@ -87,6 +87,7 @@
 
 <script>
 export default {
+  name: "Markdown",
   data() {
     let _this = this;
     return {
@@ -142,21 +143,21 @@ export default {
         category: [
           {
             required: true,
-            message:'请至少选择一个类目',
+            message: "请至少选择一个类目",
             trigger: "change"
           }
         ],
         source: [
           {
             required: true,
-            message:'请至少选择一个来源',
+            message: "请至少选择一个来源",
             trigger: "change"
           }
         ],
         important: [
           {
             required: true,
-            message:'请选择该文章的重要性',
+            message: "请选择该文章的重要性",
             trigger: "change"
           }
         ]
@@ -222,9 +223,12 @@ export default {
             .then(res => {
               if (res.code === 200) {
                 this.$message({
-                  message: '发布成功',
+                  message: "发布成功",
                   type: "success"
                 });
+                this.$refs[formName].resetFields();
+                this.ruleForm.times = '';
+                this.value ='';
                 this.$router.push("/publish");
               } else {
                 this.$message({
@@ -274,7 +278,7 @@ export default {
     width: 122px;
     margin-right: 10px;
   }
-  .backbox{
+  .backbox {
     width: 56px;
   }
 }
